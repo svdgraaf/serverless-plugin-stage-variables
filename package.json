@@ -1,0 +1,15 @@
+{
+  "author": {
+    "name": "Sander van de Graaf"
+  },
+  "description": "Plugin for the SLS 1.x that adds stage variables to apigateway",
+  "main": "src/index.js",
+  "maintainers": [
+    {
+      "email": "mail@svdgraaf.nl",
+      "name": "Sander van de Graaf"
+    }
+  ],
+  "name": "serverless-plugin-stage-variables",
+  "version": "1.0.1"
+}
