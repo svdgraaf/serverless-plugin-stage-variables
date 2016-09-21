@@ -7,12 +7,12 @@ Add stage variables for Serverless 1.x to ApiGateway, so you can use variables i
 
 custom:
   stageVariables:
-      bucket_name: ${self:custom.bucket_name}
-      endpoint: { "Fn::GetAtt": "CloudFrontEndpoint.DomainName" }
-      foo: bar
+    bucket_name: ${env.BUCKET_NAME}
+    endpoint: { "Fn::GetAtt": "CloudFrontEndpoint.DomainName" }
+    foo: bar
 
 plugins:
-   - serverless-plugin-stage-variables
+  - serverless-plugin-stage-variables
 ```
 
 And then in your lambda's, you can use:
