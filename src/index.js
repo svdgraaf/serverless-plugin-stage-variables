@@ -15,25 +15,30 @@ module.exports = Class.extend({
   },
 
   addStageVariables: function() {
-    var template = this._serverless.service.provider.compiledCloudFormationTemplate;
+    const template = this._serverless.service.provider.compiledCloudFormationTemplate;
 
-    config = {
-      StageName: 'Foobar',
+    // setup variables, if any are defined
+    var variables = {};
+    if (this._serverless.service.custom.stageVariables) {
+      variables = this._serverless.service.custom.stageVariables;
+    }
+
+    // create a config for the stage
+    var config = {
+      StageName: this._serverless.service.provider.stage,
       StageDescription: {
-        StageName: 'Foobar',
-        Variables: {
-          "Foo": "Bar"
-        }
+        StageName: this._serverless.service.provider.stage,
+        Variables: variables,
       }
     }
 
-    // find the deployment, and add the stage variables
+    // find the deployment resource, and add the stage variables
     Object.keys(template.Resources).forEach(function(key){
       if (template.Resources[key]['Type'] == 'AWS::ApiGateway::Deployment') {
         template.Resources[key] = _.merge(template.Resources[key], config);
       }
     })
 
-    console.log(template.Resources);
+    this._serverless.cli.log('Merged stage variables into ApiGateway Deployment');
   },
 });
