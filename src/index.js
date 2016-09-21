@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const Class = require('class.extend');
 
 module.exports = Class.extend({
 
