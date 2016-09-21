@@ -17,7 +17,7 @@ plugins:
 
 And then in your lambda's, you can use:
 
-```json
+```javascript
 module.exports.foobar = (event, context, cb) => {
   // event.stageVariables.bucket_name
   // event.stageVariables.endpoint
