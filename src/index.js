@@ -23,11 +23,32 @@ module.exports = Class.extend({
       variables = this._serverless.service.custom.stageVariables;
     }
 
-    // create a config for the stage
-    var config = {
-      StageName: this._serverless.service.provider.stage,
+    // console.log(this._serverless);
+    var stage = this._serverless.service.defaults.stage;
+    if (this._serverless.variables.options.stage) {
+      stage = this._serverless.variables.options.stage;
+    }
+
+    // var stage =
+
+    // create a config for the deployment, which can be ignored, see:
+    // http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-deployment.html
+    var deploymentConfig = {
+      StageName: `${stage}na`,
       StageDescription: {
-        StageName: this._serverless.service.provider.stage,
+        StageName: `${stage}na`,
+        Variables: variables,
+      }
+    }
+
+    // create a stage resource, which sets the stage and variables correctly
+    var stageConfig = {
+      Type: "AWS::ApiGateway::Stage",
+      Properties: {
+        StageName: stage,
+        Description: stage,
+        RestApiId: {"Ref": "ApiGatewayRestApi"},
+        DeploymentId: null,
         Variables: variables,
       }
     }
@@ -35,9 +56,23 @@ module.exports = Class.extend({
     // find the deployment resource, and add the stage variables
     Object.keys(template.Resources).forEach(function(key){
       if (template.Resources[key]['Type'] == 'AWS::ApiGateway::Deployment') {
-        template.Resources[key] = _.merge(template.Resources[key], config);
+        var DeploymentResource = template.Resources[key];
+
+        // set the deployment variables as well, just because we can
+        DeploymentResource.Properties = _.merge(DeploymentResource.Properties, deploymentConfig);
+        template.Resources[key] = DeploymentResource;
+
+        // add stage config
+        stageConfig.Properties.DeploymentId = {"Ref":key}
+        template.Resources.ApiGatewayStage = stageConfig;
+      }
+
+      // we need to make all api keys dependend on the stage, not the deployment
+      if (template.Resources[key]['Type'] == 'AWS::ApiGateway::ApiKey') {
+        template.Resources[key]['DependsOn'] = 'ApiGatewayStage';
       }
     })
+
 
     this._serverless.cli.log('Merged stage variables into ApiGateway Deployment');
   },
