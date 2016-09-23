@@ -23,22 +23,16 @@ module.exports = Class.extend({
       variables = this._serverless.service.custom.stageVariables;
     }
 
-    // console.log(this._serverless);
+    // find the correct stage name
     var stage = this._serverless.service.defaults.stage;
     if (this._serverless.variables.options.stage) {
       stage = this._serverless.variables.options.stage;
     }
 
-    // var stage =
-
-    // create a config for the deployment, which can be ignored, see:
+    // override the deployment config, which can be ignored, see:
     // http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-deployment.html
     var deploymentConfig = {
       StageName: `${stage}na`,
-      StageDescription: {
-        StageName: `${stage}na`,
-        Variables: variables,
-      }
     }
 
     // create a stage resource, which sets the stage and variables correctly
@@ -53,7 +47,7 @@ module.exports = Class.extend({
       }
     }
 
-    // find the deployment resource, and add the stage variables
+    // find the deployment resource, and add the stage resource
     Object.keys(template.Resources).forEach(function(key){
       if (template.Resources[key]['Type'] == 'AWS::ApiGateway::Deployment') {
         var DeploymentResource = template.Resources[key];
