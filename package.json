@@ -19,5 +19,5 @@
     "git":"https://github.com/svdgraaf/serverless-plugin-stage-variables"
   },
   "name": "serverless-plugin-stage-variables",
-  "version": "1.5.5"
+  "version": "1.6.5"
 }

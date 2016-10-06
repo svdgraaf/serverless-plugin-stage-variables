@@ -50,11 +50,7 @@ module.exports = Class.extend({
     // find the deployment resource, and add the stage resource
     Object.keys(template.Resources).forEach(function(key){
       if (template.Resources[key]['Type'] == 'AWS::ApiGateway::Deployment') {
-        var DeploymentResource = template.Resources[key];
-
-        // set the deployment variables as well, just because we can
-        DeploymentResource.Properties = _.merge(DeploymentResource.Properties, deploymentConfig);
-        template.Resources[key] = DeploymentResource;
+        delete template.Resources[key].StageName;
 
         // add stage config
         stageConfig.Properties.DeploymentId = {"Ref":key}
