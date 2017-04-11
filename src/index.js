@@ -24,7 +24,7 @@ module.exports = Class.extend({
     }
 
     // find the correct stage name
-    var stage = this._serverless.service.defaults.stage;
+    var stage = this._serverless.service.provider.stage;
     if (this._serverless.variables.options.stage) {
       stage = this._serverless.variables.options.stage;
     }
