@@ -54,7 +54,11 @@ module.exports = Class.extend({
 
         // add stage config
         stageConfig.Properties.DeploymentId = {"Ref":key}
-        template.Resources.ApiGatewayStage = stageConfig;
+        if (template.Resources.ApiGatewayStage) {
+          _.merge(template.Resources.ApiGatewayStage, stageConfig);
+        } else {
+          template.Resources.ApiGatewayStage = stageConfig;
+        }
       }
 
       // we need to make all api keys dependend on the stage, not the deployment
