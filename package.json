@@ -10,6 +10,10 @@
       "name": "Sander van de Graaf"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svdgraaf/serverless-plugin-stage-variables"
+  },
   "dependencies": {
     "lodash": "4.17.2",
     "class.extend": "0.9.2",
