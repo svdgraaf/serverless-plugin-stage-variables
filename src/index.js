@@ -10,7 +10,7 @@ module.exports = Class.extend({
     this._opts = opts;
 
     this.hooks = {
-      'after:package:compileEvents': this.addStageVariables.bind(this),
+      'after:package:packageService': this.addStageVariables.bind(this),
     };
   },
 
