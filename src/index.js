@@ -42,7 +42,7 @@ module.exports = Class.extend({
         StageName: stage,
         Description: stage,
         RestApiId: {"Ref": "ApiGatewayRestApi"},
-        DeploymentId: null,
+        DeploymentId: {"Ref": "TestDeployment"},
         Variables: variables,
       }
     }
