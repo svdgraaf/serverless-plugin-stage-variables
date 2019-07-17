@@ -22,6 +22,13 @@ module.exports = Class.extend({
     var variables = {};
     if (this._serverless.service.custom && this._serverless.service.custom.stageVariables) {
       variables = this._serverless.service.custom.stageVariables;
+      // Log the variables during deployment:
+      this.serverless.cli.log('STAGING VARS: Loading variables.' );
+      Object.keys(variables).forEach(function(key){
+        this.serverless.cli.log(
+          '\t' + key
+        );
+      });
     }
 
     // find the correct stage name

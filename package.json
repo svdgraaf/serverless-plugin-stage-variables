@@ -14,10 +14,10 @@
     "git": "https://github.com/svdgraaf/serverless-plugin-stage-variables"
   },
   "dependencies": {
-    "lodash": "4.17.11",
-    "class.extend": "0.9.2"
+    "lodash": "~4.17.13",
+    "class.extend": "~0.9.2"
   },
   "license": "MIT",
   "name": "serverless-plugin-stage-variables",
-  "version": "1.9.2"
+  "version": "1.9.3"
 }
