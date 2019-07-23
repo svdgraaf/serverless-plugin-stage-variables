@@ -28,7 +28,7 @@ module.exports = Class.extend({
         this._serverless.cli.log(
           '\t' + key
         );
-      });
+      }, this);
     }
 
     // find the correct stage name
