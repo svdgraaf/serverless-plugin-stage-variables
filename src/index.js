@@ -32,10 +32,7 @@ module.exports = Class.extend({
     }
 
     // find the correct stage name
-    var stage = this._serverless.service.provider.stage;
-    if (this._serverless.variables.options.stage) {
-      stage = this._serverless.variables.options.stage;
-    }
+    var stage = this._serverless.getProvider('aws').getStage();
 
     // override the deployment config, which can be ignored, see:
     // http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-deployment.html
@@ -49,7 +46,7 @@ module.exports = Class.extend({
       Properties: {
         StageName: stage,
         Description: stage,
-        RestApiId: {"Ref": "ApiGatewayRestApi"},
+        RestApiId: this._serverless.service.provider.apiGateway.restApiId || {"Ref": "ApiGatewayRestApi"},
         DeploymentId: {"Ref": "TestDeployment"},
         Variables: variables,
       }
