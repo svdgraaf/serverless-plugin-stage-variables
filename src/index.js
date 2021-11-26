@@ -46,7 +46,7 @@ module.exports = Class.extend({
       Properties: {
         StageName: stage,
         Description: stage,
-        RestApiId: this._serverless.service.provider.apiGateway.restApiId || {"Ref": "ApiGatewayRestApi"},
+        RestApiId: _.get(this._serverless.service.provider, 'apiGateway.restApiId') || {"Ref": "ApiGatewayRestApi"},
         DeploymentId: {"Ref": "TestDeployment"},
         Variables: variables,
       }
